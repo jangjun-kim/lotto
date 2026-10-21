@@ -1,10 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="g" cx="35%" cy="30%" r="75%">
-      <stop offset="0" stop-color="#ffe27a"/>
-      <stop offset="1" stop-color="#e0a800"/>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#3a2a7a"/>
+      <stop offset="0.55" stop-color="#1e1f5c"/>
+      <stop offset="1" stop-color="#0d1233"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.56" cy="0.46" r="0.5">
+      <stop offset="0" stop-color="#ffd76a" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ffd76a" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="moon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff6d6"/>
+      <stop offset="1" stop-color="#f3d27a"/>
+    </linearGradient>
+    <radialGradient id="ball" cx="0.36" cy="0.3" r="0.75">
+      <stop offset="0" stop-color="#ffe680"/>
+      <stop offset="0.55" stop-color="#fbc400"/>
+      <stop offset="1" stop-color="#d99a00"/>
+    </radialGradient>
+    <mask id="crescent">
+      <rect width="512" height="512" fill="#000"/>
+      <circle cx="232" cy="268" r="162" fill="#fff"/>
+      <circle cx="296" cy="232" r="138" fill="#000"/>
+    </mask>
+    <path id="sparkle" d="M0-1C0.12-0.12 0.12-0.12 1 0C0.12 0.12 0.12 0.12 0 1C-0.12 0.12-0.12 0.12-1 0C-0.12-0.12-0.12-0.12 0-1Z"/>
   </defs>
-  <circle cx="32" cy="32" r="30" fill="url(#g)"/>
-  <text x="32" y="43" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#fff" stroke="#00000033" stroke-width="1">7</text>
+
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <rect width="512" height="512" fill="url(#glow)"/>
+
+  <!-- 작은 별 -->
+  <g fill="#fff">
+    <circle cx="96" cy="96" r="3.5" opacity="0.7"/>
+    <circle cx="168" cy="64" r="2.5" opacity="0.5"/>
+    <circle cx="430" cy="210" r="3" opacity="0.6"/>
+    <circle cx="78" cy="300" r="2.5" opacity="0.45"/>
+    <circle cx="452" cy="442" r="3" opacity="0.5"/>
+    <circle cx="120" cy="452" r="2.5" opacity="0.4"/>
+  </g>
+
+  <!-- 반짝이 -->
+  <use href="#sparkle" transform="translate(402 112) scale(30)" fill="#fff"/>
+  <use href="#sparkle" transform="translate(140 118) scale(16)" fill="#fff" opacity="0.85"/>
+  <use href="#sparkle" transform="translate(418 372) scale(18)" fill="#ffe8a3"/>
+
+  <!-- 초승달 -->
+  <rect width="512" height="512" fill="url(#moon)" mask="url(#crescent)"/>
+
+  <!-- 로또 공 -->
+  <circle cx="302" cy="232" r="96" fill="url(#ball)"/>
+  <ellipse cx="270" cy="194" rx="34" ry="20" fill="#fff" opacity="0.35" transform="rotate(-30 270 194)"/>
+  <text x="302" y="266" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="96"
+        fill="#fff" text-anchor="middle" stroke="#a86f00" stroke-opacity="0.45" stroke-width="4" paint-order="stroke">7</text>
 </svg>
