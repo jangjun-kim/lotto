@@ -1,0 +1,39 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  width: 20px;
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.balls {
+  display: flex;
+  gap: 8px;
+}
+
+@media (max-width: 400px) {
+  .row {
+    gap: 8px;
+  }
+  .balls {
+    gap: 5px;
+  }
+}
+
+@media (max-width: 340px) {
+  .balls {
+    gap: 3px;
+  }
+}
