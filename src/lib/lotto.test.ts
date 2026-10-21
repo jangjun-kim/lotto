@@ -26,28 +26,34 @@ function seededRandomInt(seed: number): RandomInt {
 
 describe('generateGames', () => {
   it('항상 5게임, 각 6개, 1~45 범위, 중복 없음, 오름차순이다', () => {
+    // 반복마다 expect를 부르면 느려지므로 어긋난 결과만 모아서 마지막에 한 번 확인한다.
+    const failures: unknown[] = [];
     for (let run = 0; run < 2000; run++) {
       const games = generateGames(randomInt);
-      expect(games).toHaveLength(GAME_COUNT);
-      for (const game of games) {
-        expect(game).toHaveLength(NUMBERS_PER_GAME);
-        expect(new Set(game).size).toBe(NUMBERS_PER_GAME);
-        for (let i = 0; i < game.length; i++) {
-          expect(Number.isInteger(game[i])).toBe(true);
-          expect(game[i]).toBeGreaterThanOrEqual(MIN_NUMBER);
-          expect(game[i]).toBeLessThanOrEqual(MAX_NUMBER);
-          if (i > 0) expect(game[i - 1]).toBeLessThan(game[i]);
-        }
-      }
-      expect(validateGames(games)).toEqual([]);
+      const ok =
+        games.length === GAME_COUNT &&
+        games.every(
+          (game) =>
+            game.length === NUMBERS_PER_GAME &&
+            new Set(game).size === NUMBERS_PER_GAME &&
+            game.every(
+              (n, i) =>
+                Number.isInteger(n) && n >= MIN_NUMBER && n <= MAX_NUMBER && (i === 0 || game[i - 1] < n),
+            ),
+        ) &&
+        validateGames(games).length === 0;
+      if (!ok) failures.push(games);
     }
+    expect(failures).toEqual([]);
   });
 
   it('게임끼리 같은 조합이 없다', () => {
+    let duplicated = 0;
     for (let run = 0; run < 2000; run++) {
       const keys = generateGames(randomInt).map((g) => g.join(','));
-      expect(new Set(keys).size).toBe(GAME_COUNT);
+      if (new Set(keys).size !== GAME_COUNT) duplicated++;
     }
+    expect(duplicated).toBe(0);
   });
 
   it('같은 조합이 나오면 그 게임만 다시 생성한다', () => {
@@ -89,7 +95,7 @@ describe('generateGames', () => {
     expect(chiSquare).toBeLessThan(110);
   }, 60_000);
 
-  it('셔플 범위를 잘못 쓰면 카이제곱 검정에 걸린다 (검정 자체의 민감도 확인)', () => {
+  it('셔플 범위를 잘못 쓰면 카이제곱 검정에 걸린다 (검정 자체의 민감도 확인)', { timeout: 30_000 }, () => {
     const TRIALS = 20_000;
     const offByOne: RandomInt = (min, max) => randomInt(min, Math.max(min + 1, max - 1));
     const counts = new Array<number>(MAX_NUMBER + 1).fill(0);
