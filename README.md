@@ -14,7 +14,7 @@
 
 ## 요구 사항
 
-- Node.js 20 (20.11 이상, `.nvmrc` 참고, `nvm use`로 맞출 수 있음)
+- Node.js 20.11 이상 (배포·GitHub Actions는 `.nvmrc`의 Node 24 사용)
 
 ## 로컬 실행
 
